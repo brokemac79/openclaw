@@ -172,6 +172,50 @@ describe("runPluginPayloadSmokeCheck", () => {
     ]);
   });
 
+  it("does not also report a missing main entry when `openclaw.extensions` is empty", async () => {
+    const dir = path.join(tmpRoot, "brave");
+    await writePackage(dir, {
+      name: "@openclaw/brave-plugin",
+      main: "dist/index.js",
+      openclaw: { extensions: [] },
+    });
+    const result = await runPluginPayloadSmokeCheck({
+      records: { brave: { source: "npm", installPath: dir } },
+      env: {},
+    });
+    expect(result.failures).toStrictEqual([
+      {
+        pluginId: "brave",
+        installPath: dir,
+        reason: "missing-extension-entry",
+        detail:
+          "Plugin extension entry validation failed: package.json openclaw.extensions is empty",
+      },
+    ]);
+  });
+
+  it("does not also report a missing main entry when `openclaw.extensions` is invalid", async () => {
+    const dir = path.join(tmpRoot, "brave");
+    await writePackage(dir, {
+      name: "@openclaw/brave-plugin",
+      main: "dist/index.js",
+      openclaw: { extensions: [" "] },
+    });
+    const result = await runPluginPayloadSmokeCheck({
+      records: { brave: { source: "npm", installPath: dir } },
+      env: {},
+    });
+    expect(result.failures).toStrictEqual([
+      {
+        pluginId: "brave",
+        installPath: dir,
+        reason: "missing-extension-entry",
+        detail:
+          "Plugin extension entry validation failed: package.json openclaw.extensions[0] must be a non-empty string",
+      },
+    ]);
+  });
+
   it("accepts a packaged TypeScript extension entry when compiled runtime output exists", async () => {
     const dir = path.join(tmpRoot, "codex");
     await writePackage(dir, {
@@ -325,6 +369,34 @@ describe("runPluginPayloadSmokeCheck", () => {
         reason: "missing-extension-entry",
         detail:
           "Plugin extension entry validation failed: extension entry not found: ./dist/index.js",
+      },
+    ]);
+  });
+
+  it("keeps declared main validation additive after valid extension entry resolution", async () => {
+    const dir = path.join(tmpRoot, "brave");
+    await writePackage(dir, {
+      name: "@openclaw/brave-plugin",
+      main: "dist/index.js",
+      openclaw: { extensions: ["./extension.js"] },
+    });
+    const result = await runPluginPayloadSmokeCheck({
+      records: { brave: { source: "npm", installPath: dir } },
+      env: {},
+    });
+    expect(result.failures).toStrictEqual([
+      {
+        pluginId: "brave",
+        installPath: dir,
+        reason: "missing-extension-entry",
+        detail:
+          "Plugin extension entry validation failed: extension entry not found: ./extension.js",
+      },
+      {
+        pluginId: "brave",
+        installPath: dir,
+        reason: "missing-main-entry",
+        detail: `Plugin main entry "dist/index.js" not found at ${path.join(dir, "dist/index.js")}`,
       },
     ]);
   });

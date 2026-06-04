@@ -1,0 +1,3 @@
+Claw Queue fixture pending
+Created: 2026-06-04T09:30:41.3814892+01:00
+This file exists only to create a dummy PR for workflow testing.

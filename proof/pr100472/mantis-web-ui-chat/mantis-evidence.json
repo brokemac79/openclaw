@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "web-ui-chat-proof",
+  "title": "Mantis Web UI Chat Proof",
+  "summary": "Mantis ran the OpenClaw Control UI chat proof against the candidate ref, sent a message through the mocked Gateway, rendered the final reply in the browser, and captured browser artifacts for review.",
+  "scenario": "web-ui-chat-proof",
+  "comparison": {
+    "candidate": {
+      "sha": "e63393cdddd8af2d82daf9c55c5f16eac7091ea7",
+      "ref": "codex/mantis-web-ui-proof",
+      "expected": "Control UI chat sends through the Gateway and renders the final reply",
+      "status": "pass",
+      "fixed": true
+    },
+    "pass": true
+  },
+  "artifacts": [
+    {
+      "kind": "desktopScreenshot",
+      "lane": "candidate",
+      "label": "Control UI web chat proof",
+      "path": "web-ui-chat.png",
+      "targetPath": "web-ui-chat.png",
+      "required": true,
+      "alt": "Control UI web chat proof",
+      "inline": true,
+      "width": 900
+    },
+    {
+      "kind": "fullVideo",
+      "lane": "candidate",
+      "label": "Control UI web chat recording",
+      "path": "web-ui-chat.webm",
+      "targetPath": "web-ui-chat.webm",
+      "required": false
+    },
+    {
+      "kind": "metadata",
+      "lane": "candidate",
+      "label": "Control UI web chat proof metadata",
+      "path": "web-ui-chat-proof.json",
+      "targetPath": "web-ui-chat-proof.json",
+      "required": true
+    },
+    {
+      "kind": "metadata",
+      "lane": "candidate",
+      "label": "Control UI web chat Vitest log",
+      "path": "vitest.log",
+      "targetPath": "vitest.log",
+      "required": false
+    },
+    {
+      "kind": "report",
+      "lane": "run",
+      "label": "Mantis web UI chat report",
+      "path": "mantis-report.md",
+      "targetPath": "mantis-report.md"
+    }
+  ]
+}

@@ -6,7 +6,7 @@
   "scenario": "web-ui-chat-proof",
   "comparison": {
     "candidate": {
-      "sha": "e63393cdddd8af2d82daf9c55c5f16eac7091ea7",
+      "sha": "bd1f68ce0ddc11599afd85efd65f83d5c6229066",
       "ref": "codex/mantis-web-ui-proof",
       "expected": "Control UI chat sends through the Gateway and renders the final reply",
       "status": "pass",

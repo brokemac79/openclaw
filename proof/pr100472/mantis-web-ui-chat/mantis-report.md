@@ -2,7 +2,7 @@
 
 Status: pass
 Candidate ref: codex/mantis-web-ui-proof
-Candidate SHA: e63393cdddd8af2d82daf9c55c5f16eac7091ea7
+Candidate SHA: bd1f68ce0ddc11599afd85efd65f83d5c6229066
 
 ## Scenario
 
